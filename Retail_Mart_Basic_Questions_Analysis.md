@@ -1,115 +1,100 @@
-SQL ASSIGNMENT
+# Basic Assignments Query Analysis
 
-RETAIL MART
+## 1. Select all campaigns that are currently active.
+- **Techniques Used**: 
+  - `CURDATE()`: Retrieves the current date to check if it falls within the campaign's start and end dates.
+- **Why**: Identifies which marketing campaigns are currently running.
+- **Actionable Insight**: Allocate resources to promote active campaigns, potentially increasing customer engagement and sales.
 
-BASIC ASSIGNMENT QUESTIONS
+---
 
-1)Select all campaigns that are currently active.
+## 2. Select all customers who joined after January 1, 2023.
+- **Techniques Used**: 
+  - `ORDER BY`: Sorts customers by their join date.
+- **Why**: Targets newly joined customers for engagement strategies.
+- **Actionable Insight**: Design welcome campaigns tailored for recent joiners to foster loyalty early on.
 
-SELECT \*  
-FROM tbl\_campaign  
-WHERE CURDATE() BETWEEN start\_date AND end\_date;
+---
 
-**Actionable Insight:** Monitor the performance of current campaigns to assess their effectiveness.
+## 3. Select the total amount spent by each customer, ordered by amount in descending order.
+- **Techniques Used**: 
+  - `ORDER BY`: Ranks customers based on their total spending.
+- **Why**: Identifies high-value customers for targeted promotions.
+- **Actionable Insight**: Create personalized offers for top spenders to increase retention.
 
-**Future Step:** Allocate additional resources or adjust strategies for underperforming campaigns based on performance metrics.
+---
 
-2)Select all customers who joined after January 1, 2023\.
+## 4. Select the products with a price greater than $50.
+- **Techniques Used**: 
+  - `ORDER BY`: Sorts products by price in ascending order.
+- **Why**: Helps identify premium products for potential marketing.
+- **Actionable Insight**: Consider bundling high-priced products with discounts to stimulate sales.
 
-SELECT \*  
-FROM tbl\_customers  
-WHERE join\_date \> '2023-01-01';
+---
 
-**Actionable Insight:** New customers may require onboarding or targeted marketing to increase engagement.
+## 5. Select the number of orders placed in the last 30 days.
+- **Techniques Used**: 
+  - `COUNT(*)`: Counts orders based on a date range.
+- **Why**: Tracks recent sales activity to assess performance.
+- **Actionable Insight**: Use this metric for sales forecasting and inventory management.
 
-**Future Step:** Develop a welcome campaign or special offers to encourage first-time purchases and build loyalty among new customers.
+---
 
-3)Select the total amount spent by each customer, ordered by amount in descending order.
+## 6. Order the products by price in ascending order and limit the results to the top 5 most affordable products.
+- **Techniques Used**: 
+  - `LIMIT`: Restricts results to the top 5 products.
+- **Why**: Identifies affordable options for price-sensitive customers.
+- **Actionable Insight**: Promote these low-cost products in marketing campaigns to attract budget-conscious shoppers.
 
-SELECT total\_spent FROM tbl\_customers ORDER BY total\_spent DESC;
+---
 
-**Actionable Insight:** Identify high-spending customers to target them with premium offers and loyalty rewards.
+## 7. Select the campaign names and their budgets.
+- **Techniques Used**: 
+  - Basic `SELECT` statement to retrieve specific fields.
+- **Why**: Provides an overview of campaign budgets for financial planning.
+- **Actionable Insight**: Adjust budget allocations based on campaign performance metrics.
 
-**Future Step:** Create personalized marketing strategies for top customers, including exclusive promotions or VIP events.
+---
 
-4)Select the products with a price greater than $50.
+## 8. Select the total quantity sold for each product, ordered by quantity sold in descending order.
+- **Techniques Used**: 
+  - `JOIN`: Combines order items and orders to aggregate data.
+  - `SUM()`: Calculates the total quantity sold for each product.
+  - `GROUP BY`: Groups results by product ID.
+- **Why**: Identifies best-selling products to optimize inventory and marketing.
+- **Actionable Insight**: Increase stock for high-selling products to meet demand and improve sales.
 
-SELECT product\_id,product\_name FROM tbl\_products WHERE price \> 50;
+---
 
-**Actionable Insight:** High-priced products can be targeted for special promotions or marketing campaigns.
+## 9. Select the details of orders that have a total amount greater than $100.
+- **Techniques Used**: 
+  - Basic `SELECT` with `WHERE` clause to filter results.
+- **Why**: Identifies high-value orders for financial analysis.
+- **Actionable Insight**: Analyze high-value orders to understand customer purchasing behavior and tailor marketing strategies.
 
-**Future Step:** Consider bundling these products with lower-priced items to encourage higher-value purchases.
+---
 
-5)Select the number of orders placed in the last 30 days.
+## 10. Find the total number of customers who have made at least one purchase.
+- **Techniques Used**: 
+  - `JOIN`: Links customers and orders to find those who have made purchases.
+  - `COUNT(DISTINCT)`: Counts unique customers.
+- **Why**: Helps measure customer engagement and retention.
+- **Actionable Insight**: Focus retention efforts on converting more customers into active buyers.
 
-SELECT COUNT(\*) FROM tbl\_orders WHERE order\_date \>= CURDATE() \- INTERVAL 30 DAY;  
-SELECT COUNT(\*) AS number\_of\_orders  
-FROM tbl\_orders  
-WHERE order\_date \>= CURDATE() \+ INTERVAL 30 DAY;
+---
 
-**Actionable Insight:** A surge in recent orders indicates effective marketing or seasonal demand.
+## 11. Select the top 3 campaigns with the highest budgets.
+- **Techniques Used**: 
+  - `ORDER BY`: Sorts campaigns by budget.
+  - `LIMIT`: Restricts results to the top 3.
+- **Why**: Identifies the most significant marketing investments.
+- **Actionable Insight**: Reallocate resources to campaigns showing the most promise for returns.
 
-**Future Step:** Analyze the causes of this trend and replicate successful tactics in future campaigns or peak seasons.
+---
 
-6)Order the products by price in ascending order and limit the results to the top 5 most affordable products.
-
-SELECT price FROM tbl\_products ORDER BY price ASC LIMIT 5;
-
-**Actionable Insight:** Promote low-cost items to attract budget-conscious customers.
-
-**Future Step:** Implement promotional campaigns highlighting these products during sales events or holiday seasons.
-
-7)Select the campaign names and their budgets.
-
-SELECT campaign\_name,budget FROM tbl\_campaign;
-
-**Actionable Insight:** Evaluate budget distribution across campaigns to identify potential inefficiencies.
-
-**Future Step:** Reallocate budgets based on campaign performance and ROI analysis to optimize marketing spend.
-
-8)Select the total quantity sold for each product, ordered by quantity sold in descending order.
-
-SELECT oi.product\_id, SUM(oi.quantity) AS total\_quantity\_sold  
-FROM tbl\_order\_items oi  
-JOIN tbl\_orders o ON oi.order\_id \= o.order\_id  
-GROUP BY oi.product\_id  
-ORDER BY total\_quantity\_sold DESC;
-
-**Actionable Insight:** Identify best-selling products to ensure adequate inventory and avoid stockouts.
-
-**Future Step:** Increase marketing efforts for high-selling products and consider expanding their availability in more regions.
-
-9)Select the details of orders that have a total amount greater than $100.
-
-SELECT \* FROM tbl\_orders WHERE total\_amount \> 100;
-
-**Actionable Insight:** Understanding the characteristics of high-value orders can help tailor promotions.
-
-**Future Step:** Create targeted marketing strategies that encourage upselling or cross-selling of products frequently included in high-value orders.
-
-10)Find the total number of customers who have made at least one purchase.
-
-SELECT COUNT(DISTINCT c.customer\_id) AS total\_customers\_with\_purchases  
-FROM tbl\_customers c  
-JOIN tbl\_orders o ON c.customer\_id \= o.customer\_id;
-
-**Actionable Insight:** Knowing the number of engaged customers can guide retention efforts.
-
-**Future Step:** Implement targeted re-engagement campaigns for customers who have not purchased recently to encourage repeat sales.
-
-11)Select the top 3 campaigns with the highest budgets.
-
-SELECT campaign\_id, campaign\_name FROM tbl\_campaign ORDER BY budget DESC LIMIT 3;
-
-**Actionable Insight:** Analyze the success of high-budget campaigns to determine effective marketing strategies.
-
-**Future Step:** Invest more in successful campaigns while revisiting and refining less effective ones.
-
-12)Select the top 5 customers with the highest total amount spent.
-
-SELECT customer\_id, name FROM tbl\_customers ORDER BY total\_spent DESC LIMIT 5;
-
-**Actionable Insight:** Focus on nurturing relationships with top customers to enhance loyalty and retention.
-
-**Future Step:** Develop loyalty programs or exclusive offers for these customers to encourage continued spending and brand advocacy.
-
+## 12. Select the top 5 customers with the highest total amount spent.
+- **Techniques Used**: 
+  - `ORDER BY`: Ranks customers based on their total spending.
+  - `LIMIT`: Restricts results to the top 5 customers.
+- **Why**: Helps identify key customers who contribute significantly to revenue.
+- **Actionable Insight**: Implement exclusive loyalty programs or rewards for top customers to encourage further spending.
